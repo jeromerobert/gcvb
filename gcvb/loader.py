@@ -15,7 +15,9 @@ class BaseLoader(object):
     def load_base(self, run_id):
         ya,mod = db.retrieve_input(run_id)
         base = db.get_base_from_run(run_id)
+        # FIXME load the result/{base}/test.yaml instead of reapplying the modifier
         if (ya,mod) not in self.loaded:
+            print(ya, mod)
             self.loaded[(ya,mod)] = yaml_input.load_yaml(ya,mod)
             refs = yaml_input.get_references(self.loaded[(ya,mod)]["Tests"].values(),self.data_root)
             self.references.update(refs)
